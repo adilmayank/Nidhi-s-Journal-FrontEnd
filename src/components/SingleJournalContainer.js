@@ -30,13 +30,13 @@ const SingleJournalContainer = ({
             >
               Dated - {date}
             </Typography>
-            <Typography
+            {/* <Typography
               sx={{ fontSize: 12 }}
               color="text.secondary"
               gutterBottom
             >
               Time - {time}
-            </Typography>
+            </Typography> */}
           </Stack>
           {!isEdit ? (
             <Paper

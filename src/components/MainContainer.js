@@ -1,15 +1,32 @@
 import JournalsContainer from './JournalsContainer'
 import AddJournalContainer from './AddJournalContainer'
+import LoadingContainer from './loadingContainer'
+import ErrorContainer from './errorContainer'
 import React from 'react'
 import { Stack, Typography, Box } from '@mui/material'
 
 const MainContainer = () => {
   const [journals, setJournals] = React.useState([])
+  const [apiError, setApiError] = React.useState(false)
+  const [apiErrorMessage, setApiErrorMessage] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(true)
 
   React.useEffect(() => {
     fetch('https://journalfornidhi-backend.onrender.com/api/v1/journals')
       .then((response) => response.json())
-      .then((data) => setJournals(data))
+      .then((jsonedResponse) => {
+        const { success } = jsonedResponse
+        if (success) {
+          const { data } = jsonedResponse
+          setJournals([...data])
+          setIsLoading(false)
+        } else {
+          const { error } = jsonedResponse
+          setApiError(true)
+          setApiErrorMessage(error)
+          setIsLoading(false)
+        }
+      })
       .catch((error) => console.error(error))
   }, [])
 
@@ -25,6 +42,7 @@ const MainContainer = () => {
     //
     return new Promise((resolve, reject) => {
       if (type === 'create') {
+        console.log(journalNewBody)
         fetch('https://journalfornidhi-backend.onrender.com/api/v1/journals', {
           method: 'POST',
           headers: {
@@ -33,8 +51,18 @@ const MainContainer = () => {
           body: JSON.stringify({ body: journalNewBody }),
         })
           .then((response) => response.json())
-          .then((data) => {
-            setJournals([...data])
+          .then((jsonedResponse) => {
+            const { success } = jsonedResponse
+            if (success) {
+              const { data } = jsonedResponse
+              setJournals([...data])
+              setIsLoading(false)
+            } else {
+              const { error } = jsonedResponse
+              setApiError(true)
+              setApiErrorMessage(error)
+              setIsLoading(false)
+            }
             resolve(true)
           })
           .catch((error) => {
@@ -60,8 +88,18 @@ const MainContainer = () => {
           }
         )
           .then((response) => response.json())
-          .then((data) => {
-            setJournals([...data])
+          .then((jsonedResponse) => {
+            const { success } = jsonedResponse
+            if (success) {
+              const { data } = jsonedResponse
+              setJournals([...data])
+              setIsLoading(false)
+            } else {
+              const { error } = jsonedResponse
+              setApiError(true)
+              setApiErrorMessage(error)
+              setIsLoading(false)
+            }
             resolve(true)
           })
           .catch((error) => {
@@ -85,8 +123,18 @@ const MainContainer = () => {
           }
         )
           .then((response) => response.json())
-          .then((data) => {
-            setJournals([...data])
+          .then((jsonedResponse) => {
+            const { success } = jsonedResponse
+            if (success) {
+              const { data } = jsonedResponse
+              setJournals([...data])
+              setIsLoading(false)
+            } else {
+              const { error } = jsonedResponse
+              setApiError(true)
+              setApiErrorMessage(error)
+              setIsLoading(false)
+            }
             resolve(true)
           })
           .catch((error) => {
@@ -98,7 +146,7 @@ const MainContainer = () => {
   }
 
   return (
-    <Stack display={'grid'} rowGap={10} minWidth={"100%"}>
+    <Stack display={'grid'} rowGap={10} minWidth={'100%'}>
       <Box display={'flex'} justifyContent={'center'}>
         <Typography
           color={'#fff'}
@@ -112,10 +160,18 @@ const MainContainer = () => {
         </Typography>
       </Box>
       <AddJournalContainer journalOperations={journalOperations} />
-      <JournalsContainer
-        journals={journals}
-        journalOperations={journalOperations}
-      />
+
+      {isLoading ? (
+        <LoadingContainer></LoadingContainer>
+      ) : apiError ? (
+        <ErrorContainer message={apiErrorMessage} />
+      ) : (
+        <JournalsContainer
+          journals={journals}
+          journalOperations={journalOperations}
+          apiErrors
+        />
+      )}
     </Stack>
   )
 }
