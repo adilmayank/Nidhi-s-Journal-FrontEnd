@@ -16,7 +16,6 @@ const ActionButtonsContainer = ({
     } else if (operation === 'update') {
       const journalNewBody = journalData.body
       const journalPrevBody = journalData.previousBody
-      console.log(journalNewBody, journalPrevBody)
       if (journalNewBody !== journalPrevBody) {
         journalOperations('update', journalId, journalNewBody)
       }
@@ -43,7 +42,12 @@ const ActionButtonsContainer = ({
       )}
       {isEdit && (
         <Stack>
-          <Button size="small" variant="outlined" color='error' onClick={() => setIsEdit(false)}>
+          <Button
+            size="small"
+            variant="outlined"
+            color="error"
+            onClick={() => setIsEdit(false)}
+          >
             Cancel
           </Button>
           <Button size="small" onClick={() => handleClick('update')}>
@@ -62,30 +66,6 @@ const ActionButtonsContainer = ({
         </Stack>
       )}
     </>
-    // <Stack display={'grid'} gridTemplateColumns={'1fr 1fr'}>
-    //   {remove ? (
-    //     <Stack>
-    //       <Button
-    //         size="small"
-    //         color='success'
-    //         onClick={() => setRemove(false)}
-    //       >
-    //         No
-    //       </Button>
-    //       <Button variant='outlined' size="small" color='error' onClick={() => handleClick('remove')}>Yes</Button>
-    //     </Stack>
-    //   ) : (
-    //     <Button color='error' onClick={() => setRemove(true)}>Remove</Button>
-    //   )}
-    //   {isEdit ? (
-    //     <Stack>
-    //       <Button onClick={() => setIsEdit(false)}>Cancel</Button>
-    //       <Button onClick={() => handleClick('update')}>Update</Button>
-    //     </Stack>
-    //   ) : (
-    //     <Button onClick={() => setIsEdit(true)}>Edit</Button>
-    //   )}
-    // </Stack>
   )
 }
 

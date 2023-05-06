@@ -5,11 +5,11 @@ const JournalsContainer = ({ journals, journalOperations }) => {
   return (
     <section>
       <Stack spacing={3}>
-        {journals.map((journal, i) => {
+        {journals && journals.map((journal, i) => {
           return (
             <SingleJournalContainer
-              key={journal.id}
-              id={journal.id}
+              key={journal._id}
+              id={journal._id}
               date={journal.date}
               body={journal.body}
               journalOperations={journalOperations}
