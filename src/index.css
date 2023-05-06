@@ -1,5 +1,6 @@
 html {
   background-image: linear-gradient(to top, #b3a4ff, #a291ff, #907dff, #7c6aff, #6656ff);  background-size: cover;
+  min-height: 100vh;
 }
 
 .parent-container {
