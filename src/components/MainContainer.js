@@ -1,8 +1,6 @@
 import JournalsContainer from './JournalsContainer'
 import AddJournalContainer from './AddJournalContainer'
 import React from 'react'
-import fetchJournal from '../ApiCalls/fetchJournals'
-import { v4 as uuidv4 } from 'uuid'
 import { Stack, Typography, Box } from '@mui/material'
 
 const MainContainer = () => {
@@ -20,7 +18,6 @@ const MainContainer = () => {
     journalId = null,
     journalNewBody = null
   ) => {
-    let updatedJournals
     //
     //
     // Create Journal
