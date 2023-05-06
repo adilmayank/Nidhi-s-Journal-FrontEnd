@@ -4,7 +4,7 @@ import MainContainer from './MainContainer'
 const ParentContainer = () => {
   return (
     <section className="parent-container">
-      <Container maxWidth="xs" sx={{ 'margin-block': '20px 40px' }}>
+      <Container maxWidth="xs" sx={{ 'marginBlock': '20px 40px' }}>
         <Grid container>
           <MainContainer />
         </Grid>
