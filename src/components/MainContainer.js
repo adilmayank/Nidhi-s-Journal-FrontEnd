@@ -52,9 +52,9 @@ const MainContainer = () => {
     <Stack display={'grid'} rowGap={10}>
       <Box display={'flex'} justifyContent={'center'}>
         <Typography
-          variant="h2"
           color={"#fff"}
           sx={{
+            fontSize: "45px",
             fontFamily: "'Darumadrop One', cursive",
             textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
           }}
