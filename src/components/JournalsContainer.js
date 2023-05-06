@@ -11,6 +11,7 @@ const JournalsContainer = ({ journals, journalOperations }) => {
               key={journal._id}
               id={journal._id}
               date={journal.date}
+              time={journal.time}
               body={journal.body}
               journalOperations={journalOperations}
             />

@@ -23,62 +23,82 @@ const MainContainer = () => {
     // Create Journal
     //
     //
-    if (type === 'create') {
-      fetch('https://journalfornidhi-backend.onrender.com/api/v1/journals', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ body: journalNewBody }),
-      })
-        .then((response) => response.json())
-        .then((data) => setJournals([...data]))
-        .catch((error) => console.error(error))
-    }
-    //
-    //
-    // Update Journal
-    //
-    //
-    else if (type === 'update') {
-      console.log(journalId)
-      fetch(
-        `https://journalfornidhi-backend.onrender.com/api/v1/journals/${journalId}`,
-        {
-          method: 'PATCH',
+    return new Promise((resolve, reject) => {
+      if (type === 'create') {
+        fetch('https://journalfornidhi-backend.onrender.com/api/v1/journals', {
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
           body: JSON.stringify({ body: journalNewBody }),
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => setJournals([...data]))
-        .catch((error) => console.error(error))
-    }
-    //
-    //
-    // Remove Journal
-    //
-    //
-    else if (type === 'remove') {
-      fetch(
-        `https://journalfornidhi-backend.onrender.com/api/v1/journals/${journalId}`,
-        {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
-        .then((response) => response.json())
-        .then((data) => setJournals([...data]))
-        .catch((error) => console.error(error))
-    }
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            setJournals([...data])
+            resolve(true)
+          })
+          .catch((error) => {
+            console.error(error)
+            reject(false)
+          })
+      }
+      //
+      //
+      // Update Journal
+      //
+      //
+      else if (type === 'update') {
+        console.log(journalId)
+        fetch(
+          `https://journalfornidhi-backend.onrender.com/api/v1/journals/${journalId}`,
+          {
+            method: 'PATCH',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ body: journalNewBody }),
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setJournals([...data])
+            resolve(true)
+          })
+          .catch((error) => {
+            console.error(error)
+            reject(false)
+          })
+      }
+      //
+      //
+      // Remove Journal
+      //
+      //
+      else if (type === 'remove') {
+        fetch(
+          `https://journalfornidhi-backend.onrender.com/api/v1/journals/${journalId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => {
+            setJournals([...data])
+            resolve(true)
+          })
+          .catch((error) => {
+            console.error(error)
+            reject(false)
+          })
+      }
+    })
   }
 
   return (
-    <Stack display={'grid'} rowGap={10}>
+    <Stack display={'grid'} rowGap={10} minWidth={"100%"}>
       <Box display={'flex'} justifyContent={'center'}>
         <Typography
           color={'#fff'}

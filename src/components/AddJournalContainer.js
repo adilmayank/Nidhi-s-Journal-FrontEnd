@@ -6,10 +6,8 @@ const AddJournalContainer = ({ journalOperations }) => {
   const newJournalEntry = React.useRef()
   const handleClick = () => {
     const journalBody = newJournalEntry.current.value
-    const journalDate = new Date().toDateString()
-    const journalData = { date: journalDate, body: journalBody }
-    journalOperations('create', null, journalData).then((success) => {
-      console.log(success)
+    journalOperations('create', null, journalBody)
+    .then((success) => {
       if (success) {
         newJournalEntry.current.value = ''
       }
