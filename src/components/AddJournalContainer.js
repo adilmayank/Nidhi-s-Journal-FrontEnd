@@ -4,24 +4,28 @@ import React from 'react'
 
 const AddJournalContainer = ({ journalOperations }) => {
   const newJournalEntry = React.useRef()
+
   const handleClick = () => {
     const journalBody = newJournalEntry.current.value
-    journalOperations('create', null, journalBody)
-    .then((success) => {
-      if (success) {
-        newJournalEntry.current.value = ''
-      }
-    })
+
+    if (journalBody.trim() !== '') {
+      journalOperations('create', null, journalBody).then((success) => {
+        if (success) {
+          newJournalEntry.current.value = ''
+        }
+      })
+    }
   }
+
   return (
     <Stack rowGap={3}>
       <Card width={'100%'} color={'white'} elevation={3}>
-        <CardContent sx={{padding: "15px !important", }}>
+        <CardContent sx={{ padding: '15px !important' }}>
           <TextField
             placeholder="Your thoughts go here..."
             inputRef={newJournalEntry}
             multiline={true}
-            sx={{ width: '100%', fontSize: 12}}
+            sx={{ width: '100%', fontSize: 12 }}
           />
         </CardContent>
       </Card>
