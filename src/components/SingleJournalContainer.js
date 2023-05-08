@@ -20,7 +20,7 @@ const SingleJournalContainer = ({
   const [journalBody, setJournalBody] = React.useState(body)
   return (
     <Card elevation={5}>
-      <CardContent>
+      <CardContent style={{ whiteSpace: 'pre-line' }}>
         <Stack rowGap={2}>
           <Stack direction={'row'} justifyContent={'space-between'}>
             <Typography
