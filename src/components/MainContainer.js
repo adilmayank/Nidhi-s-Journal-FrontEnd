@@ -11,6 +11,7 @@ const MainContainer = () => {
   const [apiError, setApiError] = React.useState(false)
   const [apiErrorMessage, setApiErrorMessage] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(true)
+  const [isAdding, setIsAdding] = React.useState(false)
 
   React.useEffect(() => {
     fetch('https://journalfornidhi-backend.onrender.com/api/v1/journals')
@@ -163,7 +164,11 @@ const MainContainer = () => {
         </Box>
         <DateTimeContainer />
       </Stack>
-      <AddJournalContainer journalOperations={journalOperations} />
+      <AddJournalContainer
+        journalOperations={journalOperations}
+        isAdding={isAdding}
+        setIsAdding={setIsAdding}
+      />
 
       {isLoading ? (
         <LoadingContainer></LoadingContainer>
