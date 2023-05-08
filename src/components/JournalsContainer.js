@@ -1,19 +1,25 @@
 import SingleJournalContainer from './SingleJournalContainer'
+import PaginationComponent from './PaginationContainer'
 import { Stack, Card, CardContent } from '@mui/material'
 import React from 'react'
 
-const JournalsContainer = ({
-  journals,
-  journalOperations,
-  apiErrors,
-  loading,
-}) => {
+const JournalsContainer = ({ journals, journalOperations }) => {
+  const [currentPage, setCurrentPage] = React.useState(1)
+  const journalsPerPage = 5
+  const startIndex = (currentPage - 1) * journalsPerPage
+  const endIndex = startIndex + journalsPerPage
+  const journalsToShow = [...journals].slice(startIndex, endIndex)
+  const totalPages = Math.floor(journals.length / journalsPerPage) + 1
 
   return (
     <section>
       <Stack spacing={3}>
-        {journals.length > 0 ? (
-          journals.map((journal, i) => {
+        <PaginationComponent
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+        />
+        {journalsToShow.length > 0 ? (
+          journalsToShow.map((journal, i) => {
             return (
               <SingleJournalContainer
                 key={journal._id}
