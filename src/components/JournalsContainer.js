@@ -9,7 +9,7 @@ const JournalsContainer = ({ journals, journalOperations }) => {
   const startIndex = (currentPage - 1) * journalsPerPage
   const endIndex = startIndex + journalsPerPage
   const journalsToShow = [...journals].slice(startIndex, endIndex)
-  const totalPages = Math.floor(journals.length / journalsPerPage) + 1
+  const totalPages = Math.ceil(journals.length / journalsPerPage)
 
   return (
     <section>
