@@ -2,6 +2,7 @@ import JournalsContainer from './JournalsContainer'
 import AddJournalContainer from './AddJournalContainer'
 import LoadingContainer from './loadingContainer'
 import ErrorContainer from './errorContainer'
+import DateTimeContainer from './CurrentDateTimeContainer'
 import React from 'react'
 import { Stack, Typography, Box } from '@mui/material'
 
@@ -147,18 +148,21 @@ const MainContainer = () => {
 
   return (
     <Stack display={'grid'} rowGap={10} minWidth={'100%'}>
-      <Box display={'flex'} justifyContent={'center'}>
-        <Typography
-          color={'#fff'}
-          sx={{
-            fontSize: '45px',
-            fontFamily: "'Darumadrop One', cursive",
-            textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
-          }}
-        >
-          Nidhi's Journal
-        </Typography>
-      </Box>
+      <Stack display={'grid'} rowGap={3}>
+        <Box display={'flex'} justifyContent={'center'}>
+          <Typography
+            color={'#fff'}
+            sx={{
+              fontSize: '45px',
+              fontFamily: "'Darumadrop One', cursive",
+              textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)',
+            }}
+          >
+            Nidhi's Journal
+          </Typography>
+        </Box>
+        <DateTimeContainer />
+      </Stack>
       <AddJournalContainer journalOperations={journalOperations} />
 
       {isLoading ? (
