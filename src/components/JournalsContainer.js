@@ -11,13 +11,18 @@ const JournalsContainer = ({ journals, journalOperations }) => {
   const journalsToShow = [...journals].slice(startIndex, endIndex)
   const totalPages = Math.ceil(journals.length / journalsPerPage)
 
+
+
   return (
     <section>
       <Stack spacing={3}>
-        <PaginationComponent
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-        />
+        {totalPages > 1 && (
+          <PaginationComponent
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            currentPage={currentPage}
+          />
+        )}
         {journalsToShow.length > 0 ? (
           journalsToShow.map((journal, i) => {
             return (

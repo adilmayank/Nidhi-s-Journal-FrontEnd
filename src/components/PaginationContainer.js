@@ -1,11 +1,10 @@
 import React from 'react'
 import { Container, Pagination } from '@mui/material'
 
-const PaginationComponent = ({ totalPages, setCurrentPage }) => {
+const PaginationComponent = ({ totalPages, setCurrentPage, currentPage }) => {
   const handleClick = (e, v) => {
     setCurrentPage(v)
   }
-  console.log(totalPages)
   return (
     <Container
       sx={{
@@ -15,7 +14,12 @@ const PaginationComponent = ({ totalPages, setCurrentPage }) => {
         minWidth: '100%',
       }}
     >
-      <Pagination count={totalPages} onChange={handleClick} />
+      <Pagination
+        count={totalPages}
+        onChange={handleClick}
+        siblingCount={0}
+        boundaryCount={1}
+      />
     </Container>
   )
 }

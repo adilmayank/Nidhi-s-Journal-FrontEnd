@@ -19,7 +19,6 @@ const journalOperations = async (type, journalId, journalNewData = null) => {
     })
   }
 
-  console.log(journals)
 
   return new Promise((resolve, reject) => {
     setTimeout(() => {

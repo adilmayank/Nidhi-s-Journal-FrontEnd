@@ -13,8 +13,11 @@ const MainContainer = () => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [isAdding, setIsAdding] = React.useState(false)
 
+  const IS_PROD = process.env.NODE_ENV === "production"
+  const BASE_URL = `https://journalfornidhi-backend.onrender.com/api/v1${!IS_PROD ? "/dev" : ""}` 
+
   React.useEffect(() => {
-    fetch('https://journalfornidhi-backend.onrender.com/api/v1/journals')
+    fetch(`${BASE_URL}/journals`)
       .then((response) => response.json())
       .then((jsonedResponse) => {
         const { success } = jsonedResponse
@@ -44,8 +47,7 @@ const MainContainer = () => {
     //
     return new Promise((resolve, reject) => {
       if (type === 'create') {
-        console.log(journalNewBody)
-        fetch('https://journalfornidhi-backend.onrender.com/api/v1/journals', {
+        fetch(`${BASE_URL}/journals`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -68,7 +70,6 @@ const MainContainer = () => {
             resolve(true)
           })
           .catch((error) => {
-            console.error(error)
             reject(false)
           })
       }
@@ -78,9 +79,8 @@ const MainContainer = () => {
       //
       //
       else if (type === 'update') {
-        console.log(journalId)
         fetch(
-          `https://journalfornidhi-backend.onrender.com/api/v1/journals/${journalId}`,
+          `${BASE_URL}/journals/${journalId}`,
           {
             method: 'PATCH',
             headers: {
@@ -105,7 +105,6 @@ const MainContainer = () => {
             resolve(true)
           })
           .catch((error) => {
-            console.error(error)
             reject(false)
           })
       }
@@ -116,7 +115,7 @@ const MainContainer = () => {
       //
       else if (type === 'remove') {
         fetch(
-          `https://journalfornidhi-backend.onrender.com/api/v1/journals/${journalId}`,
+          `${BASE_URL}/journals/${journalId}`,
           {
             method: 'DELETE',
             headers: {
@@ -140,7 +139,6 @@ const MainContainer = () => {
             resolve(true)
           })
           .catch((error) => {
-            console.error(error)
             reject(false)
           })
       }
