@@ -8,15 +8,18 @@ const Logout = () => {
     localStorage.removeItem('token')
     navigate('/login')
   }
-
   return (
     <Stack>
       <Box display={'flex'} justifyContent={'flex-end'}>
-        <Button
-          variant="contained"
-          size="small"
+      <Button
+        variant="contained"
+        sx={{
+          color: '#fff',
+          width: '100px',
+          fontSize: '10px',
+        }}
           onClick={handleClick}
-          endIcon={<LogoutIcon />}
+          endIcon={<LogoutIcon sx={{scale:"0.8"}} />}
         >
           Logout
         </Button>

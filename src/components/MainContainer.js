@@ -6,6 +6,7 @@ import Logout from './Authentication/Logout'
 import DateTimeContainer from './CurrentDateTimeContainer'
 import React from 'react'
 import { Stack, Typography, Box } from '@mui/material'
+import axios from 'axios'
 
 const MainContainer = () => {
   const [journals, setJournals] = React.useState([])
@@ -13,29 +14,36 @@ const MainContainer = () => {
   const [apiErrorMessage, setApiErrorMessage] = React.useState('')
   const [isLoading, setIsLoading] = React.useState(true)
   const [isAdding, setIsAdding] = React.useState(false)
+  const bearerToken = localStorage.getItem('token')
+  const authenticationHeader = {
+    headers: { Authentication: `Bearer ${bearerToken}` },
+  }
 
   const IS_PROD = process.env.NODE_ENV === 'production'
-  const BASE_URL = `https://journalfornidhi-backend.onrender.com/api/v1${
-    !IS_PROD ? '/dev' : ''
-  }`
+  const BASE_URL = `https://jounralfornidhi-backend.onrender.com/api/v1${!IS_PROD ? '/dev' : ''}`
 
   React.useEffect(() => {
-    fetch(`${BASE_URL}/journals`)
-      .then((response) => response.json())
-      .then((jsonedResponse) => {
-        const { success } = jsonedResponse
+    axios
+      .get(`${BASE_URL}/journals`, authenticationHeader)
+      .then((response) => {
+        const { success } = response.data
         if (success) {
-          const { data } = jsonedResponse
+          const { data } = response.data
           setJournals([...data])
           setIsLoading(false)
         } else {
-          const { error } = jsonedResponse
+          const { error } = response
           setApiError(true)
           setApiErrorMessage(error)
           setIsLoading(false)
         }
       })
-      .catch((error) => console.error(error))
+      .catch((error) => {
+        setApiError(true)
+        setApiErrorMessage(error.message)
+        setIsLoading(false)
+        console.error(error)
+      })
   }, [])
 
   const journalOperations = async (
@@ -50,22 +58,17 @@ const MainContainer = () => {
     //
     return new Promise((resolve, reject) => {
       if (type === 'create') {
-        fetch(`${BASE_URL}/journals`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ body: journalNewBody }),
-        })
-          .then((response) => response.json())
-          .then((jsonedResponse) => {
-            const { success } = jsonedResponse
+        const reqBody = { body: journalNewBody }
+        axios
+          .post(`${BASE_URL}/journals`, reqBody, authenticationHeader)
+          .then((response) => {
+            const { success } = response.data
             if (success) {
-              const { data } = jsonedResponse
+              const { data } = response.data
               setJournals([...data])
               setIsLoading(false)
             } else {
-              const { error } = jsonedResponse
+              const { error } = response.data
               setApiError(true)
               setApiErrorMessage(error)
               setIsLoading(false)
@@ -82,22 +85,21 @@ const MainContainer = () => {
       //
       //
       else if (type === 'update') {
-        fetch(`${BASE_URL}/journals/${journalId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ body: journalNewBody }),
-        })
-          .then((response) => response.json())
-          .then((jsonedResponse) => {
-            const { success } = jsonedResponse
+        const reqBody = { body: journalNewBody }
+        axios
+          .patch(
+            `${BASE_URL}/journals/${journalId}`,
+            reqBody,
+            authenticationHeader
+          )
+          .then((response) => {
+            const { success } = response.data
             if (success) {
-              const { data } = jsonedResponse
+              const { data } = response.data
               setJournals([...data])
               setIsLoading(false)
             } else {
-              const { error } = jsonedResponse
+              const { error } = response.data
               setApiError(true)
               setApiErrorMessage(error)
               setIsLoading(false)
@@ -114,21 +116,21 @@ const MainContainer = () => {
       //
       //
       else if (type === 'remove') {
-        fetch(`${BASE_URL}/journals/${journalId}`, {
-          method: 'DELETE',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-          .then((response) => response.json())
-          .then((jsonedResponse) => {
-            const { success } = jsonedResponse
+        const reqBody = { data: journalNewBody }
+        axios
+          .delete(
+            `${BASE_URL}/journals/${journalId}`,
+            reqBody,
+            authenticationHeader
+          )
+          .then((response) => {
+            const { success } = response.data
             if (success) {
-              const { data } = jsonedResponse
+              const { data } = response.data
               setJournals([...data])
               setIsLoading(false)
             } else {
-              const { error } = jsonedResponse
+              const { error } = response.data
               setApiError(true)
               setApiErrorMessage(error)
               setIsLoading(false)
@@ -157,7 +159,11 @@ const MainContainer = () => {
             Nidhi's Journal
           </Typography>
         </Box>
-        <Stack display={"flex"} direction={"row"} justifyContent={"space-between"}>
+        <Stack
+          display={'flex'}
+          direction={'row'}
+          justifyContent={'space-between'}
+        >
           <DateTimeContainer />
           <Logout />
         </Stack>
@@ -169,7 +175,7 @@ const MainContainer = () => {
       />
 
       {isLoading ? (
-        <LoadingContainer></LoadingContainer>
+        <LoadingContainer />
       ) : apiError ? (
         <ErrorContainer message={apiErrorMessage} />
       ) : (

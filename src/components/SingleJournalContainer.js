@@ -28,15 +28,15 @@ const SingleJournalContainer = ({
               color="text.secondary"
               gutterBottom
             >
-              Dated - {date}
+              Dated - {new Date(date).toLocaleDateString()}
             </Typography>
-            {/* <Typography
+            <Typography
               sx={{ fontSize: 12 }}
               color="text.secondary"
               gutterBottom
             >
-              Time - {time}
-            </Typography> */}
+              Time - {new Date(date).toLocaleTimeString()}
+            </Typography>
           </Stack>
           {!isEdit ? (
             <Paper

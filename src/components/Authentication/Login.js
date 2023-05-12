@@ -45,14 +45,15 @@ const Login = () => {
     }
 
     if (!usernameError && !passwordError) {
+      const SIGNIN_URL =
+        'https://journalfornidhi-backend.onrender.com/api/v1/user/signin'
       const postBody = {
         username: username,
         password: password,
       }
       axios
-        .post('http://localhost:5000/api/v1/user/signin', postBody)
+        .post(SIGNIN_URL, postBody)
         .then((response) => {
-          console.log(response.data)
           if (response.data.success) {
             const token = response.data.bearerToken
             localStorage.setItem('token', token)
@@ -110,7 +111,12 @@ const Login = () => {
             paddingX={'0.5rem'}
           >
             <Box width={'40%'}>
-              <Button variant="outlined" fullWidth size="small" onClick={handleSignUp}>
+              <Button
+                variant="outlined"
+                fullWidth
+                size="small"
+                onClick={handleSignUp}
+              >
                 Create Account
               </Button>
             </Box>

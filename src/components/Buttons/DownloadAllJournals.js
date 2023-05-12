@@ -10,11 +10,9 @@ const DownloadAllJournalsButton = () => {
   }
 
   const handleClick = async () => {
-    const response = await axios.get(
-      'http://localhost:5000/api/v1/dev/journals/download',
-      authenticationHeader
-    )
-
+    const DOWNLOAD_URL =
+      'https://journalfornidhi-backend.onrender.com/api/v1/journals/download'
+    const response = await axios.get(DOWNLOAD_URL, authenticationHeader)
     const text = response.data
     const filename = `All_Journals_${new Date(
       Date.now()

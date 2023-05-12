@@ -16,14 +16,12 @@ const withAuth = (Component) => {
       const fetchAuth = async () => {
         try {
           if (storedToken) {
-            const response = await axios.get(
-              'http://localhost:5000/api/v1/user/authenticate',
-              {
-                headers: { Authorization: `Bearer ${storedToken}` },
-              }
-            )
+            const AUTHENTICATE_URL =
+              'https://journalfornidhi-backend.onrender.com/api/v1/user/authenticate'
+            const response = await axios.get(AUTHENTICATE_URL, {
+              headers: { Authorization: `Bearer ${storedToken}` },
+            })
             if (response.data.success) {
-              console.log(response.data.success)
               setAuthenticated(true)
               setIsLoading(false)
             }
