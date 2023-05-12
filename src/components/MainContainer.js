@@ -116,11 +116,9 @@ const MainContainer = () => {
       //
       //
       else if (type === 'remove') {
-        const reqBody = { data: journalNewBody }
         axios
           .delete(
             `${BASE_URL}/journals/${journalId}`,
-            reqBody,
             authenticationHeader
           )
           .then((response) => {
