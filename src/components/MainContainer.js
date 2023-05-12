@@ -20,7 +20,7 @@ const MainContainer = () => {
   }
 
   const IS_PROD = process.env.NODE_ENV === 'production'
-  const BASE_URL = `https://jounralfornidhi-backend.onrender.com/api/v1${!IS_PROD ? '/dev' : ''}`
+  const BASE_URL = `https://journalfornidhi-backend.onrender.com/api/v1${!IS_PROD ? '/dev' : ''}`
 
   React.useEffect(() => {
     axios
