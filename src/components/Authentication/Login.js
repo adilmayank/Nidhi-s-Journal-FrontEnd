@@ -110,21 +110,23 @@ const Login = () => {
             width={'100%'}
             paddingX={'0.5rem'}
           >
-            <Box width={'40%'}>
+            <Box width={'45%'}>
               <Button
                 variant="outlined"
                 fullWidth
                 size="small"
+                sx={{fontSize: "12px"}}
                 onClick={handleSignUp}
               >
                 Create Account
               </Button>
             </Box>
-            <Box width={'40%'}>
+            <Box width={'45%'}>
               <Button
                 variant="contained"
                 size="small"
                 fullWidth
+                sx={{fontSize: "12px"}}
                 onClick={handleLogin}
               >
                 Login
