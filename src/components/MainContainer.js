@@ -2,6 +2,7 @@ import JournalsContainer from './JournalsContainer'
 import AddJournalContainer from './AddJournalContainer'
 import LoadingContainer from './loadingContainer'
 import ErrorContainer from './errorContainer'
+import Logout from './Authentication/Logout'
 import DateTimeContainer from './CurrentDateTimeContainer'
 import React from 'react'
 import { Stack, Typography, Box } from '@mui/material'
@@ -13,8 +14,10 @@ const MainContainer = () => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [isAdding, setIsAdding] = React.useState(false)
 
-  const IS_PROD = process.env.NODE_ENV === "production"
-  const BASE_URL = `https://journalfornidhi-backend.onrender.com/api/v1${!IS_PROD ? "/dev" : ""}` 
+  const IS_PROD = process.env.NODE_ENV === 'production'
+  const BASE_URL = `https://journalfornidhi-backend.onrender.com/api/v1${
+    !IS_PROD ? '/dev' : ''
+  }`
 
   React.useEffect(() => {
     fetch(`${BASE_URL}/journals`)
@@ -79,16 +82,13 @@ const MainContainer = () => {
       //
       //
       else if (type === 'update') {
-        fetch(
-          `${BASE_URL}/journals/${journalId}`,
-          {
-            method: 'PATCH',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ body: journalNewBody }),
-          }
-        )
+        fetch(`${BASE_URL}/journals/${journalId}`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ body: journalNewBody }),
+        })
           .then((response) => response.json())
           .then((jsonedResponse) => {
             const { success } = jsonedResponse
@@ -114,15 +114,12 @@ const MainContainer = () => {
       //
       //
       else if (type === 'remove') {
-        fetch(
-          `${BASE_URL}/journals/${journalId}`,
-          {
-            method: 'DELETE',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          }
-        )
+        fetch(`${BASE_URL}/journals/${journalId}`, {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
           .then((response) => response.json())
           .then((jsonedResponse) => {
             const { success } = jsonedResponse
@@ -160,7 +157,10 @@ const MainContainer = () => {
             Nidhi's Journal
           </Typography>
         </Box>
-        <DateTimeContainer />
+        <Stack display={"flex"} direction={"row"} justifyContent={"space-between"}>
+          <DateTimeContainer />
+          <Logout />
+        </Stack>
       </Stack>
       <AddJournalContainer
         journalOperations={journalOperations}
