@@ -15,7 +15,7 @@ const JournalsContainer = ({ journals, journalOperations }) => {
   return (
     <section>
       <Stack spacing={3}>
-        <DownloadAllJournalsButton />
+        {journalsToShow.length > 0 && <DownloadAllJournalsButton />}
         {journalsToShow.length > 0 ? (
           journalsToShow.map((journal, i) => {
             return (
