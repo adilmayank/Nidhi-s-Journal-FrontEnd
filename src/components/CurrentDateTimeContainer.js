@@ -15,7 +15,7 @@ const DateTimeContainer = () => {
   }, [])
 
   return (
-    <Stack direction={'row'} justifyContent={'space-between'}>
+    <Stack direction={'column'} justifyContent={'space-between'}>
       <Typography sx={{ fontSize: 12 }} color="white" gutterBottom>
         Date - {date.toLocaleDateString()}
       </Typography>
