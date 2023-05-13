@@ -16,32 +16,35 @@ const withAuth = (Component) => {
       const fetchAuth = async () => {
         try {
           if (storedToken) {
-            const AUTHENTICATE_URL =
-              'https://journalfornidhi-backend.onrender.com/api/v1/user/authenticate'
+            const AUTHENTICATE_URL = 'https://journalfornidhi-backend.onrender.com/api/v1/user/authenticate'
+            // const AUTHENTICATE_URL =
+            //   'http://localhost:5000/api/v1/user/authenticate'
             const response = await axios.get(AUTHENTICATE_URL, {
               headers: { Authorization: `Bearer ${storedToken}` },
             })
             if (response.data.success) {
               setAuthenticated(true)
-              setIsLoading(false)
+            } else {
+              localStorage.removeItem("token")
+              alert(`${response.data.error}. Please login to continue.`)
+              setAuthenticated(false)
             }
           } else {
             setAuthenticated(false)
-            setIsLoading(false)
           }
+          setIsLoading(false)
         } catch (error) {
           console.log(error)
+          setAuthenticated(false)
           setIsLoading(false)
         }
       }
-
       fetchAuth()
     }, [])
     if (isLoading) {
       return <Loading />
     }
     if (!authenticated) {
-      console.log(`Authenticated? :${authenticated}`)
       return <Navigate to="/login" />
     }
 
