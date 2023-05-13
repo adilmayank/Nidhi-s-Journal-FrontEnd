@@ -45,7 +45,8 @@ const Login = () => {
     }
 
     if (!usernameError && !passwordError) {
-      const SIGNIN_URL = 'https://journalfornidhi-backend.onrender.com/api/v1/user/signin'
+      const SIGNIN_URL =
+        'https://journalfornidhi-backend.onrender.com/api/v1/user/signin'
       // const SIGNIN_URL = 'http://localhost:5000/api/v1/user/signin'
       const postBody = {
         username: username,
@@ -72,10 +73,21 @@ const Login = () => {
 
   return (
     <Stack minWidth={'100%'} marginY={'5rem'} paddingY={'1rem'}>
-      <Card sx={{ minHeight: '100px' }}>
+      <Card
+        sx={{
+          minHeight: '100px',
+          backdropFilter: 'blur(8px)',
+        }}
+      >
         <CardHeader
-          title="User Login 😊"
-          titleTypographyProps={{ color: '#000', fontWeight: '500' }}
+          title="User Login"
+          titleTypographyProps={{
+            display: 'flex',
+            justifyContent: 'center',
+            fontFamily: '"Poppins"',
+            color: '#000',
+            fontWeight: '500',
+          }}
         />
         <CardContent sx={{ marginBlock: '1rem' }}>
           <Box component={'form'}>
@@ -115,7 +127,7 @@ const Login = () => {
                 variant="outlined"
                 fullWidth
                 size="small"
-                sx={{fontSize: "12px"}}
+                sx={{ fontSize: '12px' }}
                 onClick={handleSignUp}
               >
                 Create Account
@@ -126,7 +138,7 @@ const Login = () => {
                 variant="contained"
                 size="small"
                 fullWidth
-                sx={{fontSize: "12px"}}
+                sx={{ fontSize: '12px' }}
                 onClick={handleLogin}
               >
                 Login
