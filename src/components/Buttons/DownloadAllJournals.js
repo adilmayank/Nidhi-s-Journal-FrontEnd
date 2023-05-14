@@ -6,7 +6,7 @@ import axios from 'axios'
 const DownloadAllJournalsButton = () => {
   const bearerToken = localStorage.getItem('token')
   const authenticationHeader = {
-    headers: { Authentication: `Bearer ${bearerToken}` },
+    headers: { Authorization: `Bearer ${bearerToken}` },
   }
 
   const handleClick = async () => {
