@@ -2,7 +2,7 @@ import JournalsContainer from './JournalsContainer'
 import AddJournalContainer from './AddJournalContainer'
 import LoadingContainer from './loadingContainer'
 import ErrorContainer from './errorContainer'
-import Logout from './Authentication/Logout'
+import AdminControls from './AdminControls/AdminControl'
 import DateTimeContainer from './CurrentDateTimeContainer'
 import React from 'react'
 import { Stack, Typography, Box } from '@mui/material'
@@ -15,16 +15,18 @@ const MainContainer = () => {
   const [isLoading, setIsLoading] = React.useState(true)
   const [isAdding, setIsAdding] = React.useState(false)
   const bearerToken = localStorage.getItem('token')
-  const authenticationHeader = {
-    headers: { Authentication: `Bearer ${bearerToken}` },
+  const authorizationHeader = {
+    headers: { authorization: `Bearer ${bearerToken}` },
   }
 
   const IS_PROD = process.env.NODE_ENV === 'production'
-  const BASE_URL = `https://journalfornidhi-backend.onrender.com/api/v1${!IS_PROD ? '/dev' : ''}`
+  const BASE_URL = `https://journalfornidhi-backend.onrender.com/api/v1${
+    !IS_PROD ? '/dev' : ''
+  }`
 
   React.useEffect(() => {
     axios
-      .get(`${BASE_URL}/journals`, authenticationHeader)
+      .get(`${BASE_URL}/journals`, authorizationHeader)
       .then((response) => {
         const { success } = response.data
         if (success) {
@@ -60,7 +62,7 @@ const MainContainer = () => {
       if (type === 'create') {
         const reqBody = { body: journalNewBody }
         axios
-          .post(`${BASE_URL}/journals`, reqBody, authenticationHeader)
+          .post(`${BASE_URL}/journals`, reqBody, authorizationHeader)
           .then((response) => {
             const { success } = response.data
             if (success) {
@@ -90,7 +92,7 @@ const MainContainer = () => {
           .patch(
             `${BASE_URL}/journals/${journalId}`,
             reqBody,
-            authenticationHeader
+            authorizationHeader
           )
           .then((response) => {
             const { success } = response.data
@@ -117,10 +119,7 @@ const MainContainer = () => {
       //
       else if (type === 'remove') {
         axios
-          .delete(
-            `${BASE_URL}/journals/${journalId}`,
-            authenticationHeader
-          )
+          .delete(`${BASE_URL}/journals/${journalId}`, authorizationHeader)
           .then((response) => {
             const { success } = response.data
             if (success) {
@@ -143,7 +142,7 @@ const MainContainer = () => {
   }
 
   return (
-    <Stack display={'grid'} rowGap={10} minWidth={'100%'}>
+    <Stack display={'grid'} rowGap={6} minWidth={'100%'}>
       <Stack display={'grid'} rowGap={3}>
         <Box display={'flex'} justifyContent={'center'}>
           <Typography
@@ -157,14 +156,8 @@ const MainContainer = () => {
             Nidhi's Journal
           </Typography>
         </Box>
-        <Stack
-          display={'flex'}
-          direction={'row'}
-          justifyContent={'space-between'}
-        >
-          <DateTimeContainer />
-          <Logout />
-        </Stack>
+        <AdminControls />
+        <DateTimeContainer />
       </Stack>
       <AddJournalContainer
         journalOperations={journalOperations}
