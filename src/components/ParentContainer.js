@@ -5,7 +5,9 @@ import withAuth from './HOC/withAuth'
 import MainContainer from './MainContainer'
 import Login from './Authentication/Login'
 import Signup from './Authentication/SignUp'
-import axios from 'axios'
+import ChangePassword from '../Pages/ChangePassword'
+import PasswordChangedSuccessfully from './Common/PasswordChangedSuccessfully'
+import PageNotFound from './Common/PageNotFound'
 
 const MainWithAuth = withAuth(MainContainer)
 
@@ -18,7 +20,10 @@ const ParentContainer = () => {
             <Routes>
               <Route path="/" Component={MainWithAuth} />
               <Route path="/login" Component={Login} />
-              <Route path="/signup" element={<Signup />} />
+              {/* <Route path="/signup" element={<Signup />} /> */}
+              <Route path="/changePassword" element={<ChangePassword />} />
+              <Route path="/passwordChangedSuccessfully" element={<PasswordChangedSuccessfully />} />
+              <Route path="*" element={<PageNotFound />} />
             </Routes>
           </Grid>
         </Container>

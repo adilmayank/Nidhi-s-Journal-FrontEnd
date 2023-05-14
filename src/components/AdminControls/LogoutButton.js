@@ -2,7 +2,7 @@ import { Box, Stack, IconButton, Button } from '@mui/material'
 import { Logout as LogoutIcon } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 
-const Logout = () => {
+const LogoutButton = () => {
   const navigate = useNavigate()
   const handleClick = () => {
     localStorage.removeItem('token')
@@ -16,6 +16,7 @@ const Logout = () => {
         sx={{
           color: '#fff',
           width: '100px',
+          height: "2rem",
           fontSize: '10px',
         }}
           onClick={handleClick}
@@ -28,4 +29,4 @@ const Logout = () => {
   )
 }
 
-export default Logout
+export default LogoutButton
