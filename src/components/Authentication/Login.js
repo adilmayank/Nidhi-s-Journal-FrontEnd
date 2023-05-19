@@ -18,35 +18,12 @@ const Login = () => {
   const [usernameError, setUsernameError] = React.useState(false)
   const [passwordError, setPasswordError] = React.useState(false)
   const [password, setPassword] = React.useState('')
+  const [isLoggingIn, setIsLoggingIn] = React.useState(false)
   const navigate = useNavigate()
 
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value)
-  }
-
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value)
-  }
-
-  const handleSignUp = () => {
-    alert('This feature is coming soon.')
-  }
-
-  const handleLogin = () => {
-    if (username.trim().length === 0) {
-      setUsernameError(true)
-    } else {
-      setUsernameError(false)
-    }
-    if (password.trim().length === 0) {
-      setPasswordError(true)
-    } else {
-      setPasswordError(false)
-    }
-
-    if (!usernameError && !passwordError) {
-      const SIGNIN_URL =
-        'https://journalfornidhi-backend.onrender.com/api/v1/user/signin'
+  React.useEffect(() => {
+    if (isLoggingIn && !usernameError && !passwordError) {
+      const SIGNIN_URL =  'https://journalfornidhi-backend.onrender.com/api/v1/user/signin'
       // const SIGNIN_URL = 'http://localhost:5000/api/v1/user/signin'
       const postBody = {
         username: username,
@@ -63,12 +40,43 @@ const Login = () => {
             alert('Invalid Credentials')
             setUsername('')
             setPassword('')
+            setPasswordError(false)
+            setUsernameError(false)
           }
         })
         .catch((error) => {
           console.log(error.message)
         })
+        .finally(() => {
+          setIsLoggingIn(false)
+        })
     }
+  }, [isLoggingIn, usernameError, passwordError])
+
+  const handleUsernameChange = (e) => {
+    setUsername(e.target.value)
+  }
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value)
+  }
+
+  const handleSignUp = () => {
+    navigate("/signup")
+  }
+
+  const handleLogin = () => {
+    if (username.trim().length === 0) {
+      setUsernameError(true)
+    } else {
+      setUsernameError(false)
+    }
+    if (password.trim().length === 0) {
+      setPasswordError(true)
+    } else {
+      setPasswordError(false)
+    }
+    setIsLoggingIn(true)
   }
 
   return (
@@ -130,7 +138,7 @@ const Login = () => {
                 sx={{ fontSize: '12px' }}
                 onClick={handleSignUp}
               >
-                Create Account
+                Sign Up
               </Button>
             </Box>
             <Box width={'45%'}>
