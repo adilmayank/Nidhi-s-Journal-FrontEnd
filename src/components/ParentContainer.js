@@ -20,7 +20,7 @@ const ParentContainer = () => {
             <Routes>
               <Route path="/" Component={MainWithAuth} />
               <Route path="/login" Component={Login} />
-              {/* <Route path="/signup" element={<Signup />} /> */}
+              <Route path="/signup" element={<Signup />} />
               <Route path="/changePassword" element={<ChangePassword />} />
               <Route path="/passwordChangedSuccessfully" element={<PasswordChangedSuccessfully />} />
               <Route path="*" element={<PageNotFound />} />
