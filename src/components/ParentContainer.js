@@ -8,6 +8,7 @@ import Signup from './Authentication/SignUp'
 import ChangePassword from '../Pages/ChangePassword'
 import PasswordChangedSuccessfully from './Common/PasswordChangedSuccessfully'
 import PageNotFound from './Common/PageNotFound'
+import MadeInLoveForNidhi from './Common/MadeWithLoveForNidhi'
 
 const MainWithAuth = withAuth(MainContainer)
 
@@ -25,6 +26,7 @@ const ParentContainer = () => {
               <Route path="/passwordChangedSuccessfully" element={<PasswordChangedSuccessfully />} />
               <Route path="*" element={<PageNotFound />} />
             </Routes>
+            <MadeInLoveForNidhi/>
           </Grid>
         </Container>
       </section>
